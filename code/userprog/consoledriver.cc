@@ -22,20 +22,18 @@ ConsoleDriver::~ConsoleDriver()
 void ConsoleDriver::PutChar(int ch)
 {
     // ...
-    #ifdef CHANGED
     console->TX (ch);
     writeDone->P ();
-    #endif // CHANGED
 }
 int ConsoleDriver::GetChar()
 {
     // ...
-    #ifdef CHANGED
-    char ch
+
+    int ch;
     readAvail->P ();
     ch= console->RX ();
     return ch;
-    #endif // CHANGED
+
 
 }
 void ConsoleDriver::PutString(const char *s)
