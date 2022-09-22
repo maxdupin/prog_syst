@@ -61,6 +61,9 @@ main (int argc, char **argv)
 "Usage: nachos -d <debugflags> -rs <random seed #> -z -h\n"
 #ifdef USER_PROGRAM
 "       -s -x <nachos file> -c <consoleIn> <consoleOut>\n"
+#ifdef CHANGED
+"       -sc \n"
+#endif //CHANGED
 #endif
 #ifdef FILESYS
 "       -f -cp <unix file> <nachos file>\n"
@@ -131,6 +134,18 @@ main (int argc, char **argv)
                       ConsoleTest (*(argv + 1), *(argv + 2));
                       argCount = 3;
                   }
+            
+            else if (!strcmp (*argv, "-sc"))
+            {                        // test the synchrone console
+                if (argc == 1)
+                    ConsoleDriverTest (NULL, NULL);
+                else
+                  {
+                      ASSERT_MSG (argc > 2, "-sc needs two file names\n");
+                      ConsoleDriverTest (*(argv + 1), *(argv + 2));
+                      argCount = 3;
+                  }
+
             }
 #endif // USER_PROGRAM
 #ifdef FILESYS
