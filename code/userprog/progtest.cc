@@ -95,7 +95,15 @@ ConsoleTest (const char *in, const char *out)
           ch = console->RX ();
           console->TX (ch);        // echo it!
           writeDone->P ();        // wait for write to finish
+          #ifdef CHANGED
+          if(ch == EOF){//fin de boucle
+            break;
+          }
+          #endif // CHANGED
           if (ch == 'q') {
+            #ifdef CHANGED
+              printf("\nAu revoir\n");
+            #endif // CHANGED
               printf ("Nothing more, bye!\n");
               break;                // if q, quit
           }
