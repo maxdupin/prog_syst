@@ -134,7 +134,7 @@ main (int argc, char **argv)
                       ConsoleTest (*(argv + 1), *(argv + 2));
                       argCount = 3;
                   }
-            
+            }
             else if (!strcmp (*argv, "-sc"))
             {                        // test the synchrone console
                 if (argc == 1)
