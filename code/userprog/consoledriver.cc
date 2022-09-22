@@ -22,6 +22,10 @@ ConsoleDriver::~ConsoleDriver()
 void ConsoleDriver::PutChar(int ch)
 {
     // ...
+    #ifdef CHANGED
+    console->TX (ch);
+    writeDone->P ();
+    #endif // CHANGED
 }
 int ConsoleDriver::GetChar()
 {
