@@ -30,10 +30,12 @@ void ConsoleDriver::PutChar(int ch)
 int ConsoleDriver::GetChar()
 {
     // ...
+    #ifdef CHANGED
     char ch
     readAvail->P ();
     ch= console->RX ();
     return ch;
+    #endif // CHANGED
 
 }
 void ConsoleDriver::PutString(const char *s)
