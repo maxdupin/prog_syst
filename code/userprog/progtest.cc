@@ -94,20 +94,17 @@ ConsoleTest (const char *in, const char *out)
           readAvail->P ();        // wait for character to arrive
           ch = console->RX ();
           #ifdef CHANGED
-          console->TX ('<');
-          writeDone->P ();
+          /*console->TX ('<');
+          writeDone->P ();*/
           #endif // CHANGED
           console->TX (ch);        // echo it!
           writeDone->P ();        // wait for write to finish
           #ifdef CHANGED
-<<<<<<< HEAD
-          console->TX ('>');
-          writeDone->P ();
-=======
+          /*console->TX ('>');
+          writeDone->P ();*/
           if(ch == EOF){//fin de boucle
             break;
           }
->>>>>>> 6cd9fb3c624d6f0b770738b651fed23f40bc851e
           #endif // CHANGED
           if (ch == 'q') {
             #ifdef CHANGED
