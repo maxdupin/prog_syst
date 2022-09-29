@@ -121,6 +121,7 @@ main (int argc, char **argv)
           if (!strcmp (*argv, "-x"))
             {                        // run a user program
                 ASSERT_MSG (argc > 1, "-x needs a program name\n");
+                consoledriver = new ConsoleDriver(NULL,NULL);
                 StartProcess (*(argv + 1));
                 argCount = 2;
             }
