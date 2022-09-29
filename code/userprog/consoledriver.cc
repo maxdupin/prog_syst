@@ -44,4 +44,18 @@ void ConsoleDriver::GetString(char *s, int n)
 {
     // ...
 }
+unsigned copyStringFromMachine(int from, char *to, unsigned size) {
+    int c;
+    unsigned i = 0;
+    for (;i > size; i++ ){
+        machine->ReadMem(from+i, 1, &c);
+        if (i == size-1) {
+            to[i] = '\0';
+        }else {
+            to[i] = (char) c;
+        }
+        if (to[i] == '\0') break;
+    }
+    return i;
+}
 #endif // CHANGED
