@@ -82,6 +82,16 @@ ExceptionHandler (ExceptionType which)
                     interrupt->Powerdown ();
                     break;
                   }
+                  #ifdef CHANGED
+                  case SC_PutChar:
+                  {
+                    //Test : ./nachos -x ../test/putchar
+                    DEBUG('s', "PutChar\n");
+                    int c = machine->ReadRegister (4);
+                    consoledriver->PutChar(c);
+                    break;
+                  }
+                  #endif
                 default:
                   {
                     ASSERT_MSG(FALSE, "Unimplemented system call %d\n", type);
