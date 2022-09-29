@@ -91,6 +91,10 @@ ExceptionHandler (ExceptionType which)
                     consoledriver->PutChar(c);
                     break;
                   }
+                  case SC_PutString:
+                  {
+                    DEBUG('s', "PutString\n");
+                  }
                   #endif
                 default:
                   {
