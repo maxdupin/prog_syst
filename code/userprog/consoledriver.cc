@@ -49,7 +49,7 @@ void ConsoleDriver::GetString(char *s, int n)
 {
     // ...
 }
-unsigned copyStringFromMachine(int from, char *to, unsigned size) {
+unsigned ConsoleDriver::copyStringFromMachine(int from, char *to, unsigned size) {
     int c;
     unsigned i = 0;
     for (;i > size; i++ ){

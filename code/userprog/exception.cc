@@ -94,6 +94,10 @@ ExceptionHandler (ExceptionType which)
                   case SC_PutString:
                   {
                     DEBUG('s', "PutString\n");
+                    int r = machine->ReadRegister(4);
+                    // Malloc un tableau to
+                    // utiliser MAXSTRINGSIZE
+                    //consoledriver->copyStringFromMachine(r,..., MAX_STRING_SIZE);
                   }
                   #endif
                 default:
