@@ -14,7 +14,9 @@
 #define SYSCALLS_H
 
 #include "copyright.h"
-
+#ifdef CHANGED
+#define MAX_STRING_SIZE 15
+#endif
 #define USER_START_ADDRESS 0x80
 
 /* system call codes -- used by the stubs to tell the kernel which system call
@@ -35,6 +37,8 @@
 #ifdef CHANGED
 #define SC_PutChar  11
 #define SC_PutString 12
+
+
 #endif
 
 #ifdef IN_USER_MODE
