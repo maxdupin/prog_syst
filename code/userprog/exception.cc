@@ -96,8 +96,11 @@ ExceptionHandler (ExceptionType which)
                     DEBUG('s', "PutString\n");
                     int r = machine->ReadRegister(4);
                     // Malloc un tableau to
+                    char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
                     // utiliser MAXSTRINGSIZE
-                    //consoledriver->copyStringFromMachine(r,..., MAX_STRING_SIZE);
+                    consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
+                    free(tab);
+                    break;
                   }
                   #endif
                 default:
