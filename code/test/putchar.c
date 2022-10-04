@@ -8,16 +8,9 @@ void print(char c, int n)
     }
     PutChar('\n');
 }
-
-void print2(char * s) {
-    PutString(s);
-}
-
 int
 main()
 {
-    char s [5] = {'a', 'b', 'c', 'd', '\0'};
     print('a',4);
-    print2(s);
     Halt();
 }
