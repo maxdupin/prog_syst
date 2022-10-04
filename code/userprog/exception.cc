@@ -99,6 +99,7 @@ ExceptionHandler (ExceptionType which)
                     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
                     // utiliser MAXSTRINGSIZE
                     consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
+                    consoledriver->PutString(tab);
                     free(tab);
                     break;
                   }
