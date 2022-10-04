@@ -11,6 +11,7 @@ void print(char c, int n)
 int
 main()
 {
+    char tab[4]={'a','b','d','\0'};
     print('a',4);
     Halt();
 }
