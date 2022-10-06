@@ -103,6 +103,15 @@ ExceptionHandler (ExceptionType which)
                     free(tab);
                     break;
                   }
+                  case SC_Exit:
+                  {
+                    DEBUG('s',"Exit\n");
+
+                    int r=machine->ReadRegister(4);
+                    printf("%d\n", r);
+                    interrupt->Powerdown ();
+                    break;
+                  }
                   #endif
                 default:
                   {

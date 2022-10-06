@@ -6,7 +6,7 @@ void print(char *str)
 int
 main()
 {
-    char str[5] = {'a', 'b', 'c', 'd', '\0'};
-    print(str);
-    Halt();
+    print("abcddrfdf");
+    //Halt();
+    return 0;
 }
