@@ -142,7 +142,7 @@ void Yield (void);
 
 #ifdef CHANGED
 void Putchar(char c);
-
+int GetChar();
 void PutString(const char *s);
 #endif
 

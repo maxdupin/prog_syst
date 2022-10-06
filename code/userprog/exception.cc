@@ -75,7 +75,7 @@ ExceptionHandler (ExceptionType which)
         case SyscallException:
           {
             switch (type)
-              {DEBUG('s', "GetChar\n");
+              {
                 case SC_Halt:
                   {
                     DEBUG ('s', "Shutdown, initiated by user program.\n");
@@ -114,7 +114,7 @@ ExceptionHandler (ExceptionType which)
                     DEBUG('s',"Exit\n");
 
                     int r=machine->ReadRegister(4);
-                    //printf("%d\n", r);
+                    printf("%d\n", r);
                     interrupt->Powerdown ();
                     break;
                   }
