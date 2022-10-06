@@ -49,7 +49,7 @@ UpdatePC ()
 //
 //      For system calls, the following is the calling convention:
 //
-//      system call code -- r2
+//      system call code -- r2DEBUG('s', "GetChar\n");
 //              arg1 -- r4
 //              arg2 -- r5
 //              arg3 -- r6
@@ -75,7 +75,7 @@ ExceptionHandler (ExceptionType which)
         case SyscallException:
           {
             switch (type)
-              {
+              {DEBUG('s', "GetChar\n");
                 case SC_Halt:
                   {
                     DEBUG ('s', "Shutdown, initiated by user program.\n");
@@ -89,6 +89,12 @@ ExceptionHandler (ExceptionType which)
                     DEBUG('s', "PutChar\n");
                     int c = machine->ReadRegister (4);
                     consoledriver->PutChar(c);
+                    break;
+                  }
+                  case SC_GetChar:
+                  {
+                    DEBUG('s', "GetChar\n");
+                    machine->WriteRegister(2, consoledriver->GetChar());
                     break;
                   }
                   case SC_PutString:
