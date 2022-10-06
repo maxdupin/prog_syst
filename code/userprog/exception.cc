@@ -108,7 +108,7 @@ ExceptionHandler (ExceptionType which)
                     DEBUG('s',"Exit\n");
 
                     int r=machine->ReadRegister(4);
-                    printf("%d\n", r);
+                    //printf("%d\n", r);
                     interrupt->Powerdown ();
                     break;
                   }
