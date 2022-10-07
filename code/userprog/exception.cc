@@ -114,6 +114,14 @@ ExceptionHandler (ExceptionType which)
                     free(tab);
                     break;
                   }
+                  case SC_GetInt:
+                  {
+                    DEBUG('s', "GetInt\n");
+                  }
+                  case SC_PutInt:
+                  {
+                    DEBUG('s', "PutInt\n");
+                  }
                   case SC_Exit:
                   {
                     DEBUG('s',"Exit\n");
