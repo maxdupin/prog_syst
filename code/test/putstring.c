@@ -2,11 +2,12 @@
 void print(char *str)
 {
     PutString(str);
+    PutChar('\n');
 }
 int
 main()
 {
-    print("abcddrfdf");
+    print("abcddrfdfdgtyhgrfffffffffffffffffffffffffffffffffff");
     //Halt();
     return 0;
 }
