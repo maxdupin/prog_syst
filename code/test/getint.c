@@ -4,7 +4,7 @@ void print()
     int i;
     GetInt(&i);
     PutInt(i);
-    PutChar("\n");
+    PutChar('\n');
 }
 int
 main()
