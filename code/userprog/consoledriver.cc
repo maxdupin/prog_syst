@@ -69,12 +69,14 @@ void ConsoleDriver::PutInt(int n){
     char *tab= (char*) malloc(sizeof(*tab)*MAX_STRING_SIZE);
     snprintf(tab,MAX_STRING_SIZE,"%d",n);
     PutString(tab);
+    free(tab);
 }
 
 void ConsoleDriver::GetInt(int *n){
     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
     GetString(tab, MAX_STRING_SIZE);
     sscanf(tab, "%d", n);
+    free(tab);
     }
 
 unsigned ConsoleDriver::copyStringFromMachine(int from, char *to, unsigned size) {
