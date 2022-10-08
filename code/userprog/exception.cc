@@ -140,6 +140,10 @@ ExceptionHandler (ExceptionType which)
                   case SC_GetInt:
                   {
                     DEBUG('s', "GetInt\n");
+                    int r = machine->ReadRegister(4);
+                    int i;
+                    consoledriver->GetInt(&i);
+                    machine->WriteMem(r,4,i);
                     break;
                   }
                   case SC_PutInt:

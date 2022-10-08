@@ -3,6 +3,7 @@ void print()
 {
     int i;
     GetInt(&i);
+    PutInt(i);
     PutChar("\n");
 }
 int
