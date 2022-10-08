@@ -1,4 +1,8 @@
 #include "syscall.h"
+//Pour pouvoir tester cette fonction veuillez rentrer dans le répertoire userprog et taper :
+// './nachos -x ../test/putchar'
+
+
 void print(char c, int n)
 {
     int i;
