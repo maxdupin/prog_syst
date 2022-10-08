@@ -143,7 +143,7 @@ ExceptionHandler (ExceptionType which)
                     int r = machine->ReadRegister(4);
                     int i;
                     consoledriver->GetInt(&i);
-                    machine->WriteMem(r,4,i);
+                    machine->WriteMem(r,sizeof(int),i);
                     break;
                   }
                   case SC_PutInt:
