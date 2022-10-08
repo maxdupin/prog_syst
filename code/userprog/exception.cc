@@ -104,9 +104,15 @@ ExceptionHandler (ExceptionType which)
                     // Malloc un tableau to
                     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
                     // utiliser MAXSTRINGSIZE
-                    int i=0;
-                    consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
-                    consoledriver->PutString(tab);
+                    int size = r/MAX_STRING_SIZE;
+                    int test=0;
+                    //Boucle pour éviter de tronquer le string
+                    for(int i = 0; i < size; i++){
+                      test=consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
+                      consoledriver->PutString(tab);
+                      r+=test;
+                      if(test!=MAX_STRING_SIZE) break;
+                    }
                     free(tab);
                     break;
                   }
@@ -114,19 +120,31 @@ ExceptionHandler (ExceptionType which)
                   {
                     DEBUG('s',"GetString");
                     int r = machine->ReadRegister(4);
-                    int size_uti = machine->ReadRegister(5);              
-                    int i=0;
+                    int size_uti =machine->ReadRegister(5);
+                    int min=0;
+                    if(size_uti<MAX_STRING_SIZE) min=size_uti;
+                    else min=MAX_STRING_SIZE;              
+                    int size = size_uti/min;
                     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
-                    int test=MAX_STRING_SIZE;
-                    while(i<size_uti){
+                    int test=0;
+                    for(int i = 0; i < size; i++){
                         consoledriver->GetString(tab,MAX_STRING_SIZE);
-                        test=consoledriver->copyStringToMachine(tab,r+i,MAX_STRING_SIZE);
-                        i+=test;
-                        if (test!=MAX_STRING_SIZE) break;
+                        test=consoledriver->copyStringToMachine(tab,r,MAX_STRING_SIZE);                      
+                        if(test!=min) break;
+                        r+=test;
                     }
 
-
                     free(tab);
+                    break;
+                  }
+                  case SC_GetInt:
+                  {
+                    DEBUG('s', "GetInt\n");
+                    break;
+                  }
+                  case SC_PutInt:
+                  {
+                    DEBUG('s', "PutInt\n");
                     break;
                   }
                   case SC_Exit:

@@ -53,7 +53,7 @@ void ConsoleDriver::GetString(char *s, int n)
     while(i!=n){
         g=GetChar();
         s[i]=g;
-        if(g=='\0'){
+        if(g=='\0'||g=='\n'){
             break;
         }
         i++;
@@ -62,18 +62,18 @@ void ConsoleDriver::GetString(char *s, int n)
 
     
 }
+
+void ConsoleDriver::PutInt(int n){}
+
+void ConsoleDriver::GetInt(int *n){}
+
 unsigned ConsoleDriver::copyStringFromMachine(int from, char *to, unsigned size) {
     int c;
     unsigned i = 0;
     
     for (;i < size; i++ ){
         machine->ReadMem(from+i, 1, &c);
-        
-        if (i == size-1) {
-            to[i] = '\0';
-        }else {
-            to[i] = (char) c;
-        }
+        to[i] = (char) c;
         if (to[i] == '\0') break;
     }
     return i;
@@ -85,13 +85,12 @@ unsigned ConsoleDriver::copyStringToMachine(char *from, int to, unsigned size) {
     
     for (;i < size; i++ ){
         c= (int) from[i];
-        if (i == size-1) {
-            from[i] = '\0';
-        }else {
+        if (from[i] == '\0'||from[i]=='\n') break;
+        else {
             from[i] = (int) c;
             machine->WriteMem(to+i, 1, c);
         }
-        if (from[i] == '\0') break;
+        
         
     }
     machine->WriteMem(to+i, 1, '\0');

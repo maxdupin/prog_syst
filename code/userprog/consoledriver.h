@@ -15,6 +15,10 @@ class ConsoleDriver:dontcopythis {
     
     void PutString(const char *s); // Behaves like fputs(3S)
     void GetString(char *s, int n); // Behaves like fgets(3S)
+    
+    void PutInt(int n);
+    void GetInt(int *n);
+
     unsigned copyStringFromMachine(int from, char *to, unsigned size);
     unsigned copyStringToMachine(char *from, int to, unsigned size);
   private:
