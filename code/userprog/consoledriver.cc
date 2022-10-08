@@ -64,7 +64,12 @@ void ConsoleDriver::GetString(char *s, int n)
     
 }
 
-void ConsoleDriver::PutInt(int n){}
+void ConsoleDriver::PutInt(int n){
+
+    char *tab= (char*) malloc(sizeof(*tab)*MAX_STRING_SIZE);
+    snprintf(tab,MAX_STRING_SIZE,"%d",n);
+    PutString(tab);
+}
 
 void ConsoleDriver::GetInt(int *n){
     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));

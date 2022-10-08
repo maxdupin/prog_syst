@@ -145,6 +145,8 @@ ExceptionHandler (ExceptionType which)
                   case SC_PutInt:
                   {
                     DEBUG('s', "PutInt\n");
+                    int r=machine->ReadRegister(4);
+                    consoledriver->PutInt(r);
                     break;
                   }
                   case SC_Exit:
