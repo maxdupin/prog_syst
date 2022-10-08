@@ -1,12 +1,13 @@
 #include "syscall.h"
-void print()
+void print(char* s,int n)
 {
-    int i = GetChar();
-    PutChar(i);
+    GetString(s,n);
+    PutString(s);
 }
 int
 main()
 {
-    print();
+    char tab[] ={'a','b','b','b','b','b','b'};
+    print(tab,15);
     return 0;
 }

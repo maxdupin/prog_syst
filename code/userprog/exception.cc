@@ -104,8 +104,28 @@ ExceptionHandler (ExceptionType which)
                     // Malloc un tableau to
                     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
                     // utiliser MAXSTRINGSIZE
+                    int i=0;
                     consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
                     consoledriver->PutString(tab);
+                    free(tab);
+                    break;
+                  }
+                  case SC_GetString :
+                  {
+                    DEBUG('s',"GetString");
+                    int r = machine->ReadRegister(4);
+                    int size_uti = machine->ReadRegister(5);              
+                    int i=0;
+                    char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
+                    int test=MAX_STRING_SIZE;
+                    while(i<size_uti){
+                        consoledriver->GetString(tab,MAX_STRING_SIZE);
+                        test=consoledriver->copyStringToMachine(tab,r+i,MAX_STRING_SIZE);
+                        i+=test;
+                        if (test!=MAX_STRING_SIZE) break;
+                    }
+
+
                     free(tab);
                     break;
                   }

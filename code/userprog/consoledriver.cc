@@ -48,6 +48,19 @@ void ConsoleDriver::PutString(const char *s)
 void ConsoleDriver::GetString(char *s, int n)
 {
     // ...
+    int i=0;
+    char g;
+    while(i!=n){
+        g=GetChar();
+        s[i]=g;
+        if(g=='\0'){
+            break;
+        }
+        i++;
+    }
+    s[i]='\0';
+
+    
 }
 unsigned ConsoleDriver::copyStringFromMachine(int from, char *to, unsigned size) {
     int c;
@@ -66,4 +79,24 @@ unsigned ConsoleDriver::copyStringFromMachine(int from, char *to, unsigned size)
     return i;
     
 }
+unsigned ConsoleDriver::copyStringToMachine(char *from, int to, unsigned size) {
+    int c;
+    unsigned i = 0;
+    
+    for (;i < size; i++ ){
+        c= (int) from[i];
+        if (i == size-1) {
+            from[i] = '\0';
+        }else {
+            from[i] = (int) c;
+            machine->WriteMem(to+i, 1, c);
+        }
+        if (from[i] == '\0') break;
+        
+    }
+    machine->WriteMem(to+i, 1, '\0');
+    return i;
+    
+}
+
 #endif // CHANGED
