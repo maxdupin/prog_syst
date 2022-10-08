@@ -3,6 +3,7 @@
 #include "system.h"
 #include "consoledriver.h"
 #include "synch.h"
+#include "syscall.h"
 static Semaphore *readAvail;
 static Semaphore *writeDone;
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
@@ -63,7 +64,12 @@ void ConsoleDriver::GetString(char *s, int n)
     
 }
 
-void ConsoleDriver::PutInt(int n){}
+void ConsoleDriver::PutInt(int n){
+
+    char *tab= (char*) malloc(sizeof(*tab)*MAX_STRING_SIZE);
+    snprintf(tab,MAX_STRING_SIZE,"%d",n);
+    PutString(tab);
+}
 
 void ConsoleDriver::GetInt(int *n){}
 

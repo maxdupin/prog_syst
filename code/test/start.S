@@ -178,6 +178,14 @@ GetString:
         j        $31
         .end   GetString
         
+        .globl PutInt
+        .ent   PutInt
+PutInt:
+        addiu $2,$0,SC_PutInt
+        syscall
+        j        $31
+        .end   PutInt
+
         .globl GetInt
         .ent   GetInt
 GetInt:
@@ -186,13 +194,7 @@ GetInt:
         j        $31
         .end   GetInt
 
-        .globl PutInt
-        .ent   PutInt
-PutInt:
-        addiu $2,$0,SC_PutInt
-        syscall
-        j        $31
-        .end   PutInt
+
 
 /* dummy function to keep gcc happy */
         .globl  __main
