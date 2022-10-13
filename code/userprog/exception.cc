@@ -166,10 +166,11 @@ ExceptionHandler (ExceptionType which)
                   case SC_ThreadCreate: //./nachos -rs 1234
                   {
                     DEBUG('s',"ThreadCreate\n");
+                    printf("truc\n");
                     //do_ThreadCreate(f,arg)
                     break;
                   }
-                  case SC_Thread_Exit:
+                  case SC_ThreadExit:
                   {
                     DEBUG('s',"ThreadExit");
                     //do_ThreadExit()
