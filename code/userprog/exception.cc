@@ -162,6 +162,22 @@ ExceptionHandler (ExceptionType which)
                     interrupt->Powerdown ();
                     break;
                   }
+                  
+                  case SC_ThreadCreate: //./nachos -rs 1234
+                  {
+                    DEBUG('s',"ThreadCreate\n");
+                    //do_ThreadCreate(f,arg)
+                    break;
+                  }
+                  case SC_Thread_Exit:
+                  {
+                    DEBUG('s',"ThreadExit");
+                    //do_ThreadExit()
+                    break;
+                  }
+
+
+
                   #endif
                 default:
                   {
