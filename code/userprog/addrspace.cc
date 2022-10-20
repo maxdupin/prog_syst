@@ -292,3 +292,14 @@ AddrSpace::RestoreState ()
     machine->currentPageTable = pageTable;
     machine->currentPageTableSize = numPages;
 }
+#ifdef CHANGED
+int AddrSpace::AllocateUsersStack()
+{
+    return (numPages*PageSize-16-256);
+}
+unsigned int GetNumPages(){
+    return machine->currentPageTableSize;
+}
+#endif
+
+//Pagesize -16 -256
