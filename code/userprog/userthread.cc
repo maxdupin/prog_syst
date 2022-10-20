@@ -2,8 +2,9 @@
 
 static void StartUserThread(void *schmurtz)
 {
+    DEBUG('x',"mon debug%d\n");
     
-}
+    }
 
 
 int do_threadCreate(int f, int arg)
@@ -15,4 +16,7 @@ int do_threadCreate(int f, int arg)
     t->space=currentThread->space;
     t->Start(StartUserThread, &structK);
     return 0;
+}
+int do_ThreadExit(){
+    currentThread->Finish();
 }
