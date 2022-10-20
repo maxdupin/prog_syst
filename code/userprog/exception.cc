@@ -174,7 +174,7 @@ ExceptionHandler (ExceptionType which)
                   case SC_ThreadExit:
                   {
                     DEBUG('s',"ThreadExit");
-                    do_ThreadExit();
+                    //do_ThreadExit();
                     break;
                   }
 

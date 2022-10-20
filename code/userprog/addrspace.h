@@ -42,7 +42,6 @@ class AddrSpace:public dontcopythis
     unsigned NumPages(void) { return numPages; }
     #ifdef CHANGED
     int AllocateUsersStack();
-    unsigned int GetNumPages();
     #endif
   private:
     NoffHeader noffH;           // Program layout
