@@ -26,7 +26,7 @@ static void StartUserThread(void *schmurtz)
 
 
 
-int do_threadCreate(int f, int arg)
+int do_ThreadCreate(int f, int arg)
 {
     struct s *structK = (struct s *)malloc(sizeof(s));
     structK->f = f;
