@@ -10,7 +10,9 @@ static void StartUserThread(void *schmurtz)
         machine->WriteRegister (i, 0);
 
     machine->WriteRegister (PCReg, structK->f);
+    DEBUG ('x', "[DEBUG] Function: %d\n", structK->f);
     machine->WriteRegister (4, structK->arg);
+    DEBUG ('x', "[DEBUG] Function: %d\n", structK->arg);
 
     machine->WriteRegister (NextPCReg, machine->ReadRegister(PCReg) + 4);
     free(schmurtz);
@@ -21,6 +23,7 @@ static void StartUserThread(void *schmurtz)
     machine->WriteRegister (StackReg, size);
     //DEBUG ('a', "Initializing stack register to 0x%x\n",
            //numPages * PageSize - 16);
+    machine->DumpMem("threads.svg");
     machine->Run();
 }
 

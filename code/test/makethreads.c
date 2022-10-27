@@ -3,16 +3,18 @@
 
 void print(char c)
 {
+    PutChar("\n");
     PutChar(c);
     PutChar("\n");
     ThreadExit();
 }
 
-
 int
 main()
 {
-    ThreadCreate(print, 'a');
-    while(true);
+    ThreadCreate(print, "a");
+    PutChar("h");
+    //while(true); 
     return 0;
 }
+
