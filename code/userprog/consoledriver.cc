@@ -6,12 +6,17 @@
 #include "syscall.h"
 static Semaphore *readAvail;
 static Semaphore *writeDone;
+static Lock *readLock;
+static Lock *writeLock;
+
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
 static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 ConsoleDriver::ConsoleDriver(const char *in, const char *out)
 {
     readAvail = new Semaphore("read avail", 0);
     writeDone = new Semaphore("write done", 0);
+    readLock = new Lock("read lock");
+    writeLock = new Lock("write lock");
     console = new Console (in, out, ReadAvailHandler, WriteDoneHandler, NULL);
 }
 ConsoleDriver::~ConsoleDriver()
@@ -19,20 +24,30 @@ ConsoleDriver::~ConsoleDriver()
     delete console;
     delete writeDone;
     delete readAvail;
+    delete readLock;
+    delete writeLock;
 }
 void ConsoleDriver::PutChar(int ch)
 {
     // ...
+    writeLock->Acquire();
+
     console->TX (ch);
     writeDone->P ();
+    
+    writeLock->Release();
+    
 }
 int ConsoleDriver::GetChar()
 {
     // ...
-
+    //readLock->V();
+    readLock->Acquire();
     int ch;
     readAvail->P ();
     ch= console->RX ();
+
+    readLock->Release();
     return ch;
 
 

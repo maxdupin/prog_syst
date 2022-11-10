@@ -1,10 +1,11 @@
 #include "userthread.h"
 #include "addrspace.h"
+class Semaphore;
 
+uint compteurT=0;
 static void StartUserThread(void *schmurtz)
 {
     struct s *structK=(struct s *)schmurtz;
-
     int i;
     for (i = 0; i < NumTotalRegs; i++)
         machine->WriteRegister (i, 0);
@@ -23,7 +24,7 @@ static void StartUserThread(void *schmurtz)
     machine->WriteRegister (StackReg, size);
     //DEBUG ('a', "Initializing stack register to 0x%x\n",
            //numPages * PageSize - 16);
-    machine->DumpMem("threads.svg");
+    //machine->DumpMem("threads.svg");
     machine->Run();
 }
 
@@ -31,6 +32,7 @@ static void StartUserThread(void *schmurtz)
 
 int do_ThreadCreate(int f, int arg)
 {
+    compteurT++;
     struct s *structK = (struct s *)malloc(sizeof(s));
     structK->f = f;
     structK->arg = arg;
@@ -40,6 +42,14 @@ int do_ThreadCreate(int f, int arg)
     return 0;
 }
 int do_ThreadExit(){
+    if(compteurT>0)//nombre tread n'est pas le dernier
+    {
+        compteurT--;
+    }
+
+    else{
+        interrupt->Powerdown();
+    }
     currentThread->Finish();
     return 0;
 }
