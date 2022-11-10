@@ -21,6 +21,8 @@ static void StartUserThread(void *schmurtz)
     // allocated the stack; but subtract off a bit, to make sure we don't
     // accidentally reference off the end!
     unsigned size = currentThread->space->AllocateUsersStack();
+    currentThread->space->AddInBitMap();
+    currentThread->space->compteurT++;
     machine->WriteRegister (StackReg, size);
     //DEBUG ('a', "Initializing stack register to 0x%x\n",
            //numPages * PageSize - 16);
@@ -42,14 +44,16 @@ int do_ThreadCreate(int f, int arg)
     return 0;
 }
 int do_ThreadExit(){
-    if(compteurT>0)//nombre tread n'est pas le dernier
+    if(currentThread->space->compteurT > 0)//nombre tread n'est pas le dernier
     {
-        compteurT--;
+        currentThread->space->compteurT--;
     }
 
     else{
         interrupt->Powerdown();
     }
+    int pos = currentThread->space->GetPosInBitMap();
+    currentThread->space->ClearBitMap(pos);
     currentThread->Finish();
     return 0;
 }

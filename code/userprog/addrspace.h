@@ -18,6 +18,7 @@
 #include "translate.h"
 #include "noff.h"
 #include "list.h"
+#include "bitmap.h"
 
 #define UserStacksAreaSize		1024	// increase this as necessary!
 
@@ -42,6 +43,11 @@ class AddrSpace:public dontcopythis
     unsigned NumPages(void) { return numPages; }
     #ifdef CHANGED
     int AllocateUsersStack();
+    uint compteurT;
+    BitMap *bitmap;
+    int AddInBitMap();
+    void ClearBitMap(int which);
+    int GetPosInBitMap();
     #endif
   private:
     NoffHeader noffH;           // Program layout
