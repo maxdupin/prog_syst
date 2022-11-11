@@ -1,8 +1,10 @@
 #include "userthread.h"
 #include "addrspace.h"
+
 class Semaphore;
 
 uint compteurT=0;
+
 static void StartUserThread(void *schmurtz)
 {
     struct s *structK=(struct s *)schmurtz;
@@ -32,6 +34,7 @@ static void StartUserThread(void *schmurtz)
 
 int do_ThreadCreate(int f, int arg)
 {
+    
     compteurT++;
     struct s *structK = (struct s *)malloc(sizeof(s));
     structK->f = f;
