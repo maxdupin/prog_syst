@@ -22,6 +22,9 @@
 #include "syscall.h"
 #include "new"
 
+#ifdef CHANGED
+class Semaphore;
+#endif
 //----------------------------------------------------------------------
 // SwapHeader
 //      Do little endian to big endian conversion on the bytes in the
@@ -69,6 +72,10 @@ List AddrSpaceList;
 AddrSpace::AddrSpace (OpenFile * executable)
 {
     unsigned int i, size;
+    #ifdef CHANGED
+    compteurT = 0;
+    bitmap = new BitMap(256*8);
+    #endif
 
     executable->ReadAt (&noffH, sizeof (noffH), 0);
     if ((noffH.noffMagic != NOFFMAGIC) &&
@@ -140,7 +147,7 @@ AddrSpace::~AddrSpace ()
 {
   delete [] pageTable;
   pageTable = NULL;
-
+  bitmap->~BitMap();
   AddrSpaceList.Remove(this);
 }
 
@@ -296,6 +303,27 @@ AddrSpace::RestoreState ()
 int AddrSpace::AllocateUsersStack()
 {
     return (numPages*PageSize-16-256);
+}
+
+int
+AddrSpace::AddInBitMap ()
+{
+    if(bitmap->NumClear() > 0){
+        return bitmap->Find();
+    }
+    return -1;
+}
+
+int
+AddrSpace::GetPosInBitMap ()
+{
+    return 256*8-bitmap->NumClear();
+}
+
+void
+AddrSpace::ClearBitMap (int which)
+{
+    bitmap->Clear(which);
 }
 #endif
 
