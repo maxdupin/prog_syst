@@ -69,6 +69,37 @@ List AddrSpaceList;
 //      "executable" is the file containing the object code to load into memory
 //----------------------------------------------------------------------
 
+#ifdef CHANGED
+static void ReadAtVirtual(OpenFile *executable, int virtualaddr,
+int numBytes, int position, TranslationEntry *pageTable,
+unsigned numPages)
+{
+    TranslationEntry *tmpPageTable = pageTable;
+    unsigned tmpNumPages = numPages;
+
+    machine->currentPageTable = pageTable;
+    machine->currentPageTableSize = numPages;
+
+    char tmpBuff[numBytes];
+    executable->ReadAt(tmpBuff, numBytes, position);
+
+
+
+    //boucle de writeMem
+    int value;
+    for (int i = 0; i < numBytes; i++)
+    {
+        value = (int)tmpBuff[i];
+        machine->WriteMem(virtualaddr+i, 1, value);
+    }
+
+
+    machine->currentPageTable = tmpPageTable;
+    machine->currentPageTableSize = tmpNumPages;
+}
+#endif
+
+
 AddrSpace::AddrSpace (OpenFile * executable)
 {
     unsigned int i, size;
@@ -103,7 +134,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++)
       {
-          pageTable[i].physicalPage = i;        // for now, phys page # = virtual page #
+          pageTable[i].physicalPage = i+1;        // for now, phys page # = virtual page #
           pageTable[i].valid = TRUE;
           pageTable[i].use = FALSE;
           pageTable[i].dirty = FALSE;
@@ -117,17 +148,15 @@ AddrSpace::AddrSpace (OpenFile * executable)
       {
           DEBUG ('a', "Initializing code segment, at 0x%x, size 0x%x\n",
                  noffH.code.virtualAddr, noffH.code.size);
-          executable->ReadAt (&(machine->mainMemory[noffH.code.virtualAddr]),
-                              noffH.code.size, noffH.code.inFileAddr);
+          ReadAtVirtual(executable, noffH.code.virtualAddr,
+                              noffH.code.size, noffH.code.inFileAddr, pageTable, numPages);
       }
     if (noffH.initData.size > 0)
       {
           DEBUG ('a', "Initializing data segment, at 0x%x, size 0x%x\n",
                  noffH.initData.virtualAddr, noffH.initData.size);
-          executable->ReadAt (&
-                              (machine->mainMemory
-                               [noffH.initData.virtualAddr]),
-                              noffH.initData.size, noffH.initData.inFileAddr);
+          ReadAtVirtual(executable, noffH.initData.virtualAddr,
+                              noffH.initData.size, noffH.initData.inFileAddr, pageTable, numPages);
       }
 
     DEBUG ('a', "Area for stacks at 0x%x, size 0x%x\n",
@@ -325,6 +354,8 @@ AddrSpace::ClearBitMap (int which)
 {
     bitmap->Clear(which);
 }
+
+
 #endif
 //utiliser une variable qui prend le n° de slot et pour le main thread lui donner la première case marquée et lui dire que c'est la cienne
 
