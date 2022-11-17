@@ -150,7 +150,7 @@ Lock::Release ()
     #ifdef CHANGED
     Thread *thread; 
     IntStatus oldLevel = interrupt->SetLevel (IntOff);
-
+    ASSERT_MSG(owner==currentThread,"ERROR owner");
     thread = (Thread *) queue->Remove ();
     if (thread != NULL)		// make thread ready, consuming the V immediately
         scheduler->ReadyToRun (thread);

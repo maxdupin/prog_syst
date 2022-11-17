@@ -25,7 +25,7 @@
 #ifdef CHANGED
 class Semaphore;
 #endif
-//----------------------------------------------------------------------
+//-------------------256---------------------------------------------------
 // SwapHeader
 //      Do little endian to big endian conversion on the bytes in the
 //      object file header, in case the file was generated on a little
@@ -74,7 +74,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     unsigned int i, size;
     #ifdef CHANGED
     compteurT = 0;
-    bitmap = new BitMap(256*8);
+    bitmap = new BitMap(UserStacksAreaSize/256);
     #endif
 
     executable->ReadAt (&noffH, sizeof (noffH), 0);
@@ -317,7 +317,7 @@ AddrSpace::AddInBitMap ()
 int
 AddrSpace::GetPosInBitMap ()
 {
-    return 256*8-bitmap->NumClear();
+    return (UserStacksAreaSize/256)-1-bitmap->NumClear();
 }
 
 void
@@ -326,5 +326,6 @@ AddrSpace::ClearBitMap (int which)
     bitmap->Clear(which);
 }
 #endif
+//utiliser une variable qui prend le n° de slot et pour le main thread lui donner la première case marquée et lui dire que c'est la cienne
 
 //Pagesize -16 -256

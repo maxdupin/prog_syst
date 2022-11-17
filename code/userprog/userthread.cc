@@ -3,7 +3,6 @@
 
 class Semaphore;
 
-uint compteurT=0;
 
 static void StartUserThread(void *schmurtz)
 {
@@ -37,7 +36,6 @@ static void StartUserThread(void *schmurtz)
 int do_ThreadCreate(int f, int arg)
 {
     
-    compteurT++;
     struct s *structK = (struct s *)malloc(sizeof(s));
     structK->f = f;
     structK->arg = arg;
@@ -47,16 +45,18 @@ int do_ThreadCreate(int f, int arg)
     return 0;
 }
 int do_ThreadExit(){
-    if(currentThread->space->compteurT > 0)//nombre tread n'est pas le dernier
+    
+    if(currentThread->space->compteurT > 0)
     {
         currentThread->space->compteurT--;
+        int pos = currentThread->space->GetPosInBitMap();
+        currentThread->space->ClearBitMap(pos);
     }
 
     else{
         interrupt->Powerdown();
     }
-    int pos = currentThread->space->GetPosInBitMap();
-    currentThread->space->ClearBitMap(pos);
+    
     currentThread->Finish();
     return 0;
 }
