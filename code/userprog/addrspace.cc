@@ -127,7 +127,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
           executable->ReadAt (&
                               (machine->mainMemory
                                [noffH.initData.virtualAddr]),
-                              noffH.initData.size, noffH.initData.inFileAddr);
+                              noffH.initData.size, noffH.initData.inFileAddr); //interdiction de le faire mais comme on a qu'un seule processus on peut le faire
       }
 
     DEBUG ('a', "Area for stacks at 0x%x, size 0x%x\n",
