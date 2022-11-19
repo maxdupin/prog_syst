@@ -4,15 +4,14 @@ volatile int i;
 void print(char c)
 {  
     PutChar(c);
-    PutChar('\n');
-    //while(1);
     ThreadExit();
+    PutChar('\n');
 }
 
 int
 main()
 {
-    for(i = 0; i<20; i++){
+    for(i = 0; i<10; i++){
         ThreadCreate(print, 'a');
     }
     ThreadExit(); 

@@ -130,10 +130,20 @@ class Thread:public dontcopythis
 #ifdef __SANITIZE_ADDRESS__
     void *fake_stack;           // Fake stack of libasan
 #endif
+
+    #ifdef CHANGED
+    void SetPosInBitMap(int pos);
+    int GetPosInBitMap();
+    #endif
+
+
   private:
     int main_stack;             // Whether this is the main stack provided by OS
     ThreadStatus status;        // ready, running or blocked
     const char *name;
+    #ifdef CHANGED
+    int posInBitMap;
+    #endif
 
     void StackAllocate (VoidFunctionPtr func, void *arg);
     // Allocate a stack for thread.
@@ -176,5 +186,6 @@ extern "C"
 // Stop running oldThread and start running newThread
     void SWITCH (Thread * oldThread, Thread * newThread);
 }
+
 
 #endif				// THREAD_H

@@ -105,7 +105,8 @@ AddrSpace::AddrSpace (OpenFile * executable)
     unsigned int i, size;
     #ifdef CHANGED
     compteurT = 0;
-    bitmap = new BitMap(UserStacksAreaSize/256);
+    bitmap = new BitMap(UserStacksAreaSize);
+    AddInBitMap();
     #endif
 
     executable->ReadAt (&noffH, sizeof (noffH), 0);
@@ -155,15 +156,8 @@ AddrSpace::AddrSpace (OpenFile * executable)
       {
           DEBUG ('a', "Initializing data segment, at 0x%x, size 0x%x\n",
                  noffH.initData.virtualAddr, noffH.initData.size);
-<<<<<<< HEAD
-          executable->ReadAt (&
-                              (machine->mainMemory
-                               [noffH.initData.virtualAddr]),
-                              noffH.initData.size, noffH.initData.inFileAddr); //interdiction de le faire mais comme on a qu'un seule processus on peut le faire
-=======
           ReadAtVirtual(executable, noffH.initData.virtualAddr,
                               noffH.initData.size, noffH.initData.inFileAddr, pageTable, numPages);
->>>>>>> d58706255c0038ba4f8e0c93bb9d4fbada331ca7
       }
 
     DEBUG ('a', "Area for stacks at 0x%x, size 0x%x\n",
@@ -349,13 +343,13 @@ AddrSpace::AddInBitMap ()
     }
     return -1;
 }
-
+/*
 int
 AddrSpace::GetPosInBitMap ()
 {
     return (UserStacksAreaSize/256)-1-bitmap->NumClear();
 }
-
+*/
 void
 AddrSpace::ClearBitMap (int which)
 {

@@ -71,6 +71,9 @@ Thread::Thread (const char *threadName)
     userRegisters[LoadValueReg] = 0;
 #endif
     ThreadList.Append(this);
+#ifdef CHANGED
+    posInBitMap = 0;
+#endif
 }
 
 //----------------------------------------------------------------------
@@ -527,6 +530,21 @@ DumpThreadsState(FILE *output, AddrSpace *space, unsigned ptr_x, unsigned virtua
         ptr_y += y_offset;
       }
 }
+
+#ifdef CHANGED
+void
+Thread::SetPosInBitMap(int pos)
+{
+    posInBitMap = pos;
+}
+
+int
+Thread::GetPosInBitMap()
+{
+    return posInBitMap;
+}
+#endif
+
 
 #endif
 
