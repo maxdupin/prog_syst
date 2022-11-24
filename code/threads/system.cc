@@ -25,6 +25,7 @@ Timer *timer;			// the hardware timer device,
 #ifdef CHANGED
 #ifdef USER_PROGRAM
 ConsoleDriver *consoledriver;
+PageProvider *pageProvider;
 #endif
 #endif
 
@@ -184,6 +185,9 @@ Initialize (int argc, char **argv)
 
 #ifdef USER_PROGRAM
     machine = new Machine (debugUserProg);	// this must come first
+    #ifdef CHANGED
+    pageProvider = new PageProvider();
+    #endif
 #endif
 
 #ifdef FILESYS
@@ -235,6 +239,10 @@ Cleanup ()
     if(consoledriver) {
         delete consoledriver;
         consoledriver = NULL;
+    }
+    if(pageProvider) {
+        delete pageProvider;
+        pageProvider = NULL;
     }
 #endif
     if (machine) {

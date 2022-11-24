@@ -22,6 +22,7 @@
 #include "syscall.h"
 #include "new"
 
+
 #ifdef CHANGED
 class Semaphore;
 #endif
@@ -107,6 +108,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     compteurT = 0;
     bitmap = new BitMap(UserStacksAreaSize);
     AddInBitMap();
+    //pageProvider=new PageProvider();
     #endif
 
     executable->ReadAt (&noffH, sizeof (noffH), 0);
@@ -135,7 +137,9 @@ AddrSpace::AddrSpace (OpenFile * executable)
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++)
       {
-          pageTable[i].physicalPage = i+1;        // for now, phys page # = virtual page #
+          #ifdef CHANGED
+          pageTable[i].physicalPage = pageProvider->GetEmptyPage();        // for now, phys page # = virtual page #
+          #endif
           pageTable[i].valid = TRUE;
           pageTable[i].use = FALSE;
           pageTable[i].dirty = FALSE;
@@ -177,8 +181,14 @@ AddrSpace::~AddrSpace ()
 {
   delete [] pageTable;
   pageTable = NULL;
-  bitmap->~BitMap();
   AddrSpaceList.Remove(this);
+  #ifdef CHANGED
+  bitmap->~BitMap();
+  for (unsigned i = 0; i < numPages; i++)
+  {
+    pageProvider->ReleasePage(i);
+  }
+  #endif
 }
 
 //----------------------------------------------------------------------

@@ -53,6 +53,8 @@ extern PostOffice *postOffice;
 #ifdef USER_PROGRAM
 #include "consoledriver.h"
 extern ConsoleDriver *consoledriver;
+#include "pageprovider.h"
+extern PageProvider *pageProvider;
 #endif
 #endif
 
