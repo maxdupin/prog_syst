@@ -179,7 +179,25 @@ ExceptionHandler (ExceptionType which)
                     break;
                   }
 
+                  case SC_ForkExec:
+                  {
+                    DEBUG('s',"ForkExec\n");
+                    int filename = machine->ReadRegister(4);
+                    Thread *t= new Thread("process");
+                    OpenFile *executable = fileSystem->Open (filename);
+                    AddrSpace *space;
+                    if (executable == NULL)
+                      {
+                        printf ("Unable to open file %s\n", filename);
+                        return ;
+                      }
+                    space = new AddrSpace (executable);
+                    t->space = space;
+                    delete executable;
 
+
+                    break;
+                  }
 
                   #endif
                 default:
