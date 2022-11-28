@@ -25,6 +25,7 @@
 #include "system.h"
 #include "syscall.h"
 #include "userthread.h"
+#include "userfork.h"
 //----------------------------------------------------------------------
 // UpdatePC : Increments the Program Counter register in order to resume
 // the user program immediately after the "syscall" instruction.
@@ -182,20 +183,15 @@ ExceptionHandler (ExceptionType which)
                   case SC_ForkExec:
                   {
                     DEBUG('s',"ForkExec\n");
-                    int filename = machine->ReadRegister(4);
-                    Thread *t= new Thread("process");
-                    OpenFile *executable = fileSystem->Open (filename);
-                    AddrSpace *space;
-                    if (executable == NULL)
-                      {
-                        printf ("Unable to open file %s\n", filename);
-                        return ;
-                      }
-                    space = new AddrSpace (executable);
-                    t->space = space;
-                    delete executable;
-
-
+                    printf("avant r\n");
+                    int r = machine->ReadRegister(4);
+                    printf("après r\n");
+                    char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
+                    consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
+                    printf("sku\n");
+                    do_ForkExec(tab);
+                    printf("ski\n");
+                    free(tab);  
                     break;
                   }
 
