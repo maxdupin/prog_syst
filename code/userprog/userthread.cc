@@ -1,5 +1,6 @@
 #include "userthread.h"
 #include "addrspace.h"
+#include "userfork.h"
 
 class Semaphore;
 
@@ -58,7 +59,7 @@ int do_ThreadExit(){
     }
 
     else{
-        interrupt->Powerdown();
+        do_ForkExit();
     }
     
     currentThread->Finish();

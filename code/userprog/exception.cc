@@ -184,8 +184,8 @@ ExceptionHandler (ExceptionType which)
                   {
                     DEBUG('s',"ForkExec\n");
                     int r = machine->ReadRegister(4);
-                    char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
-                    consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
+                    char* tab =(char*) malloc(256*sizeof(char));
+                    consoledriver->copyStringFromMachine(r,tab, 256);
                     do_ForkExec(tab);
                     free(tab);
                     break;

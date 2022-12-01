@@ -26,6 +26,7 @@ Timer *timer;			// the hardware timer device,
 #ifdef USER_PROGRAM
 ConsoleDriver *consoledriver;
 PageProvider *pageProvider;
+uint CompteurP;
 #endif
 #endif
 
@@ -91,9 +92,11 @@ Initialize (int argc, char **argv)
     int argCount;
     const char *debugArgs = "";
     bool randomYield = FALSE;
+    
 
 #ifdef USER_PROGRAM
     bool debugUserProg = FALSE;	// single step user program
+    CompteurP=0;
 #endif
 #ifdef FILESYS_NEEDED
     bool format = FALSE;	// format disk

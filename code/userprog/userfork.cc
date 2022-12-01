@@ -10,7 +10,8 @@ static void StartUserProc(void *arg){
 
 
 int do_ForkExec(char *filename){
-    
+    CompteurP++;
+
     OpenFile *executable = fileSystem->Open (filename);
     AddrSpace *space;
     if (executable == NULL)
@@ -24,5 +25,14 @@ int do_ForkExec(char *filename){
     delete executable;
     t->Start(StartUserProc,NULL);
 
+    return 0;
+}
+
+int do_ForkExit(){
+    CompteurP--;
+    if (CompteurP==0){
+        interrupt->Powerdown();
+        
+    }
     return 0;
 }
