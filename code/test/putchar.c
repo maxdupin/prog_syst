@@ -17,5 +17,6 @@ main()
 {
     print('a',4);
     //Halt();
+    //while(1);
     return 0;
 }
