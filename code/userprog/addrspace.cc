@@ -75,8 +75,8 @@ static void ReadAtVirtual(OpenFile *executable, int virtualaddr,
 int numBytes, int position, TranslationEntry *pageTable,
 unsigned numPages)
 {
-    TranslationEntry *tmpPageTable = pageTable;
-    unsigned tmpNumPages = numPages;
+    TranslationEntry *tmpPageTable = machine->currentPageTable;
+    unsigned tmpNumPages = machine->currentPageTableSize ;
 
     machine->currentPageTable = pageTable;
     machine->currentPageTableSize = numPages;
@@ -134,11 +134,15 @@ AddrSpace::AddrSpace (OpenFile * executable)
     DEBUG ('a', "Initializing address space, num pages %d, total size 0x%x\n",
            numPages, size);
 // first, set up the translation
+    //printf("-----> n= %d \n",numPages);
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++)
       {
           #ifdef CHANGED
-          pageTable[i].physicalPage = pageProvider->GetEmptyPage();        // for now, phys page # = virtual page #
+          int p = pageProvider->GetEmptyPage();
+          pageTable[i].physicalPage = p;        // for now, phys page # = virtual page #
+            ASSERT_MSG(p >= 0, "Error memory %d", p);
+          //printf("-----> %d \n",p);
           #endif
           pageTable[i].valid = TRUE;
           pageTable[i].use = FALSE;
@@ -170,6 +174,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     pageTable[0].valid = FALSE;			// Catch NULL dereference
 
     AddrSpaceList.Append(this);
+
 }
 
 //----------------------------------------------------------------------
@@ -179,16 +184,15 @@ AddrSpace::AddrSpace (OpenFile * executable)
 
 AddrSpace::~AddrSpace ()
 {
-  delete [] pageTable;
-  pageTable = NULL;
-  AddrSpaceList.Remove(this);
-  #ifdef CHANGED
-  bitmap->~BitMap();
-  for (unsigned i = 0; i < numPages; i++)
-  {
-    pageProvider->ReleasePage(i);
-  }
-  #endif
+    for (unsigned i = 0; i < numPages; i++){
+    pageProvider->ReleasePage(pageTable[i].physicalPage);
+    }
+    delete [] pageTable;
+    pageTable = NULL;
+    AddrSpaceList.Remove(this);
+    #ifdef CHANGED
+    bitmap->~BitMap();
+    #endif
 }
 
 //----------------------------------------------------------------------
@@ -336,8 +340,10 @@ AddrSpace::SaveState ()
 void
 AddrSpace::RestoreState ()
 {
+    //printf("+++++ %d | %p \n",numPages,pageTable);
     machine->currentPageTable = pageTable;
     machine->currentPageTableSize = numPages;
+    //printf("%d | %p \n",machine->currentPageTableSize,machine->currentPageTable);
 }
 #ifdef CHANGED
 int AddrSpace::AllocateUsersStack()

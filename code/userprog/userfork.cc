@@ -2,8 +2,9 @@
 
 
 
-static void StartUserProc(){
+static void StartUserProc(void *arg){
     currentThread->space->InitRegisters();
+    currentThread->space->RestoreState ();	// load page table register
     machine->Run();
 }
 
@@ -21,10 +22,7 @@ int do_ForkExec(char *filename){
     space = new AddrSpace (executable);
     t->space = space;
     delete executable;
-    t->Start((VoidFunctionPtr)StartUserProc, 0);
-
-    
-    delete space;
+    t->Start(StartUserProc,NULL);
 
     return 0;
 }

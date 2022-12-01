@@ -183,15 +183,11 @@ ExceptionHandler (ExceptionType which)
                   case SC_ForkExec:
                   {
                     DEBUG('s',"ForkExec\n");
-                    printf("avant r\n");
                     int r = machine->ReadRegister(4);
-                    printf("après r\n");
                     char* tab =(char*) malloc(MAX_STRING_SIZE*sizeof(char));
                     consoledriver->copyStringFromMachine(r,tab, MAX_STRING_SIZE);
-                    printf("sku\n");
                     do_ForkExec(tab);
-                    printf("ski\n");
-                    free(tab);  
+                    free(tab);
                     break;
                   }
 

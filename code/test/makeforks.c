@@ -2,8 +2,8 @@
 
 int main()
 {
-    //PutChar('a');
+    PutChar('a');
     ForkExec("../test/putchar");
-    ForkExec("../test/putchar");
+    //ForkExec("../test/putchar");
     while(1);
 }

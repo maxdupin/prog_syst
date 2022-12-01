@@ -11,5 +11,6 @@ int
 main()
 {
     print("abcd");
+    ThreadExit();
     return 0;
 }
