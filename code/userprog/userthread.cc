@@ -23,7 +23,6 @@ static void StartUserThread(void *schmurtz)
     // allocated the stack; but subtract off a bit, to make sure we don't
     // accidentally reference off the end!
     unsigned size = currentThread->space->AllocateUsersStack();
-    currentThread->space->compteurT++;
     machine->WriteRegister (StackReg, size);
     //DEBUG ('a', "Initializing stack register to 0x%x\n",
            //numPages * PageSize - 16);
@@ -40,6 +39,7 @@ int do_ThreadCreate(int f, int arg)
     structK->f = f;
     structK->arg = arg;
     Thread *t = new Thread("forked thread");
+    currentThread->space->compteurT++;
     t->space=currentThread->space;
     int posInBitMap = currentThread->space->AddInBitMap();
     if(posInBitMap != -1){
@@ -50,15 +50,13 @@ int do_ThreadCreate(int f, int arg)
 }
 int do_ThreadExit(){
     
-    if(currentThread->space->compteurT > 0)
-    {
         currentThread->space->compteurT--;
         int pos = currentThread->GetPosInBitMap();
-        //printf("%d\n", pos);
+        //printf("thread =%d\n", currentThread->space->compteurT);
         currentThread->space->ClearBitMap(pos);
-    }
 
-    else{
+
+    if(currentThread->space->compteurT==0){
         do_ForkExit();
     }
     

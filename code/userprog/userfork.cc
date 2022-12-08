@@ -11,7 +11,6 @@ static void StartUserProc(void *arg){
 
 int do_ForkExec(char *filename){
     CompteurP++;
-
     OpenFile *executable = fileSystem->Open (filename);
     AddrSpace *space;
     if (executable == NULL)
@@ -22,6 +21,9 @@ int do_ForkExec(char *filename){
     Thread *t= new Thread("forked thread");
     space = new AddrSpace (executable);
     t->space = space;
+    #ifdef CHANGED
+    space->InitFirstThread(t);
+    #endif
     delete executable;
     t->Start(StartUserProc,NULL);
 
@@ -30,6 +32,7 @@ int do_ForkExec(char *filename){
 
 int do_ForkExit(){
     CompteurP--;
+    delete currentThread->space;
     if (CompteurP==0){
         interrupt->Powerdown();
         

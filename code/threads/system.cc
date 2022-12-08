@@ -96,7 +96,7 @@ Initialize (int argc, char **argv)
 
 #ifdef USER_PROGRAM
     bool debugUserProg = FALSE;	// single step user program
-    CompteurP=0;
+    CompteurP=1;
 #endif
 #ifdef FILESYS_NEEDED
     bool format = FALSE;	// format disk

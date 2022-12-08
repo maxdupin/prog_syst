@@ -21,6 +21,7 @@
 #ifdef CHANGED
 #include "bitmap.h"
 #include "pageprovider.h"
+class Thread;
 #endif
 
 #define UserStacksAreaSize		1024	// increase this as necessary!
@@ -51,6 +52,7 @@ class AddrSpace:public dontcopythis
     int AddInBitMap();
     void ClearBitMap(int which);
     int GetPosInBitMap();
+    void InitFirstThread(Thread* t);
     //PageProvider *pageProvider;
     #endif
   private:

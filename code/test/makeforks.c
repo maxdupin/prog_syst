@@ -7,15 +7,21 @@ int main()
     //ForkExec("../test/putchar");
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
+
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
+
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
+
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
+
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
+
     ForkExec("../test/userpages0");
     ForkExec("../test/userpages1");
-    while(1);
+    ThreadExit();
+    return 0;
 }

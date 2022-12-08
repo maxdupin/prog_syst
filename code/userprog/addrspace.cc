@@ -24,6 +24,7 @@
 
 
 #ifdef CHANGED
+#include "thread.h"
 class Semaphore;
 #endif
 //-------------------256---------------------------------------------------
@@ -105,9 +106,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
 {
     unsigned int i, size;
     #ifdef CHANGED
-    compteurT = 0;
-    bitmap = new BitMap(UserStacksAreaSize);
-    AddInBitMap();
+    compteurT = 1;
     //pageProvider=new PageProvider();
     #endif
 
@@ -134,15 +133,14 @@ AddrSpace::AddrSpace (OpenFile * executable)
     DEBUG ('a', "Initializing address space, num pages %d, total size 0x%x\n",
            numPages, size);
 // first, set up the translation
-    //printf("-----> n= %d \n",numPages);
     pageTable = new TranslationEntry[numPages];
+    //ASSERT_MSG(cond, "Error PLace")
     for (i = 0; i < numPages; i++)
       {
           #ifdef CHANGED
           int p = pageProvider->GetEmptyPage();
           pageTable[i].physicalPage = p;        // for now, phys page # = virtual page #
             ASSERT_MSG(p >= 0, "Error memory %d", p);
-          //printf("-----> %d \n",p);
           #endif
           pageTable[i].valid = TRUE;
           pageTable[i].use = FALSE;
@@ -370,6 +368,13 @@ void
 AddrSpace::ClearBitMap (int which)
 {
     bitmap->Clear(which);
+}
+void
+AddrSpace::InitFirstThread(Thread* t){
+    
+    bitmap = new BitMap(UserStacksAreaSize);
+    AddInBitMap();
+    t->SetPosInBitMap(0);
 }
 
 
