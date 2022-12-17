@@ -1,6 +1,7 @@
 #include "syscall.h"
 #define THIS "aaa"
 #define THAT "bbb"
+volatile int i;
 const int N = 10; // Choose it large enough!
 void puts(const char *s)
 {
@@ -17,7 +18,9 @@ ThreadExit();
 }
 int main()
 {
-ThreadCreate(f, THIS);
-f(THAT);
+    for(i=0; i<1; i++){
+        ThreadCreate(f, THIS);
+        f(THAT);
+    }
 ThreadExit();
 }
