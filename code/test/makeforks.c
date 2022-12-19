@@ -1,5 +1,8 @@
 #include "syscall.h"
-
+/*
+Pour lancer le programme de test veuillez utiliser la commande suivante: 
+./nachos -rs 1234 -x ../test/makeforks
+*/
 int main()
 {
     //PutChar('a');
